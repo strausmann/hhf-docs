@@ -1,0 +1,6 @@
+[submodule "projects/crowdsec-manager"]
+	path = projects/crowdsec-manager
+	url = https://github.com/strausmann/crowdsec_manager.git
+[submodule "projects/middleware-manager"]
+	path = projects/middleware-manager
+	url = https://github.com/strausmann/middleware-manager.git
