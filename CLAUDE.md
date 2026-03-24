@@ -69,10 +69,20 @@ not experienced DevOps engineers. Every page must be understandable without deep
 **Every forum/Discord question about a documented topic is a docs bug.**
 Integrate the answer into the documentation, not just the forum thread.
 
+### Environment Separation (Strict)
+
+| Environment | Purpose | Access |
+|------------|---------|--------|
+| **Production** (crowdsec.strausmann.cloud etc.) | Personal HomeLab | **OFF LIMITS — never use for testing, screenshots, or docs** |
+| **Test** (test-crowdsec.strausmann.cloud etc.) | Release testing, screenshots, feature verification | Dedicated instances on hhdocker01 |
+| **Staging** (docs-crowdsec.strausmann.cloud etc.) | Documentation preview | Fumadocs builds from this repo |
+
+**NEVER use production instances for documentation work. Always use dedicated test instances.**
+
 ### Documentation Style
 
 - Use Fumadocs MDX components where available (Callout, Card, Tab, Step)
-- Screenshots: Add for complex UI workflows, skip for simple pages
+- Screenshots: Only from **test instances**, never from production
 - Tables: Always sorted alphabetically
 - API docs: Include complete request/response examples with realistic data
 - Getting Started pages: Step-by-step with numbered instructions
