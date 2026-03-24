@@ -1,0 +1,43 @@
+name: Documentation Quality Check
+
+on:
+  pull_request:
+    paths:
+      - 'projects/*/docs/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Copilot Code Review
+        uses: github/copilot-code-review-action@v1
+        with:
+          model: claude-sonnet-4
+          custom-instructions: |
+            You are reviewing documentation changes for an open-source project.
+            The documentation is written in MDX (Fumadocs framework).
+            
+            CRITICAL: Cross-reference every technical claim in the documentation
+            against the actual source code in this repository:
+            - API endpoints: verify against internal/api/routes.go
+            - Environment variables: verify against internal/config/config.go or main.go
+            - Response formats: verify against internal/models/models.go
+            - Feature descriptions: verify against the actual handler code
+            - CLI commands: verify against Makefile, package.json, or go.mod
+            
+            Flag any documentation that:
+            1. Describes an endpoint that doesn't exist in routes.go
+            2. Shows a wrong default value for an environment variable
+            3. Uses incorrect command syntax
+            4. Describes a feature that doesn't match the implementation
+            5. Is written too technically for HomeLab beginners
+            
+            Provide specific file:line references when pointing out discrepancies.
