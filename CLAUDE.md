@@ -39,16 +39,44 @@ hhf-docs/
   - `feat:` — New documentation pages
   - `chore:` — Build tooling, CI/CD, maintenance
 - Branch naming: `crowdsec/<topic>` or `middleware/<topic>`
+- **Upstream PRs via dedicated branch**: Work on feature branches in the fork submodule,
+  merge to a `docs-contribution` branch (not main), then create upstream PR from there.
+  This keeps our main clean and allows multiple parallel topics.
 - PRs to upstream: Author `Bjoern Strausmann <bjoern@strausmann.net>`
 - **No Co-Authored-By Claude in upstream PRs**
 
-### Documentation
+### Target Audience
 
-- Follow the existing style of each project (don't introduce new patterns)
+The documentation targets **HomeLab beginners** who are experimenting with Docker —
+not experienced DevOps engineers. Every page must be understandable without deep IT knowledge.
+
+**Mandatory rules:**
+- No implicit assumptions about prior knowledge
+- Show complete commands (not just snippets), including expected output
+- Explain technical terms on first use
+- Document error scenarios and how to fix them
+- Every step explains what happens and what the user should see
+- "If you see X, do Y" patterns for troubleshooting
+
+### Community Sources (Pflicht)
+
+**Before writing any new page**, research these community sources for common questions:
+
+- **Forum:** https://forum.hhf.technology/ — If a user had to ask there, the docs were unclear
+- **Discord:** HHF Technology Discord — Maintainer answers and user workarounds
+- **GitHub Issues:** Both upstream repos — Feature requests often reveal missing docs
+
+**Every forum/Discord question about a documented topic is a docs bug.**
+Integrate the answer into the documentation, not just the forum thread.
+
+### Documentation Style
+
 - Use Fumadocs MDX components where available (Callout, Card, Tab, Step)
-- Screenshots: Only add if they show something not obvious from text
+- Screenshots: Add for complex UI workflows, skip for simple pages
 - Tables: Always sorted alphabetically
-- API docs: Include request/response examples with realistic data
+- API docs: Include complete request/response examples with realistic data
+- Getting Started pages: Step-by-step with numbered instructions
+- Configuration pages: Show defaults, explain every option, give examples
 
 ### Workflow
 
