@@ -50,3 +50,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Trigger Dockhand redeploy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          curl -sf -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-Hub-Signature-256: sha256=$(echo -n '{}' | openssl dgst -sha256 -hmac '${{ secrets.DOCKHAND_WEBHOOK_SECRET }}' | awk '{print $2}')" \
+            "https://dock.strausmann.cloud/api/git/stacks/1/webhook" \
+            -d '{}' || echo "Webhook trigger failed (non-critical)"
