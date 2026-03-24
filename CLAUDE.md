@@ -85,6 +85,27 @@ make docs-crowdsec-serve     # Serve locally on port 8081
 make docs-middleware-serve   # Serve locally on port 8082
 ```
 
+## CI/CD Pipeline
+
+```
+Push to main → GitHub Actions → Docker Build → GHCR Push → hhdocker01 pulls latest
+PR created   → GitHub Actions → Docker Build → GHCR Push (pr-<number> tag) → PR Comment with image
+```
+
+Images: `ghcr.io/strausmann/docs-crowdsec-manager` and `ghcr.io/strausmann/docs-middleware-manager`
+
+See [WORKFLOW.md](WORKFLOW.md) for the complete contribution process.
+
+## Learnings (Pflicht)
+
+Jeder Fehler, jedes Problem, jeder Workaround wird dokumentiert:
+
+1. Eintrag in `learnings/<topic>.md` erstellen
+2. Fix in den betroffenen Skill/Agent/Dockerfile integrieren
+3. Checkliste im Learning abhaken
+
+**Nie dasselbe Problem zweimal debuggen — einmal loesen, fuer immer dokumentieren.**
+
 ## Upstream Repositories
 
 - CrowdSec Manager: https://github.com/hhftechnology/crowdsec_manager

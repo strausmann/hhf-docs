@@ -1,0 +1,107 @@
+name: PR Preview Build
+
+on:
+  pull_request:
+    paths:
+      - 'projects/*/docs/**'
+      - 'staging/Dockerfile.fumadocs'
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      crowdsec: ${{ steps.changes.outputs.crowdsec }}
+      middleware: ${{ steps.changes.outputs.middleware }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            crowdsec:
+              - 'projects/crowdsec-manager/docs/**'
+            middleware:
+              - 'projects/middleware-manager/docs/docs/**'
+
+  build-crowdsec:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.crowdsec == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push preview
+        uses: docker/build-push-action@v6
+        with:
+          context: projects/crowdsec-manager/docs
+          file: staging/Dockerfile.fumadocs
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/docs-crowdsec-manager:pr-${{ github.event.pull_request.number }}
+
+      - name: Comment PR with preview info
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-crowdsec
+          message: |
+            ## CrowdSec Manager Docs Preview
+            Image: `ghcr.io/${{ github.repository_owner }}/docs-crowdsec-manager:pr-${{ github.event.pull_request.number }}`
+            ```bash
+            docker pull ghcr.io/${{ github.repository_owner }}/docs-crowdsec-manager:pr-${{ github.event.pull_request.number }}
+            docker run --rm -p 8081:3000 ghcr.io/${{ github.repository_owner }}/docs-crowdsec-manager:pr-${{ github.event.pull_request.number }}
+            ```
+
+  build-middleware:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.middleware == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push preview
+        uses: docker/build-push-action@v6
+        with:
+          context: projects/middleware-manager/docs/docs
+          file: staging/Dockerfile.fumadocs
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/docs-middleware-manager:pr-${{ github.event.pull_request.number }}
+
+      - name: Comment PR with preview info
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-middleware
+          message: |
+            ## Middleware Manager Docs Preview
+            Image: `ghcr.io/${{ github.repository_owner }}/docs-middleware-manager:pr-${{ github.event.pull_request.number }}`
+            ```bash
+            docker pull ghcr.io/${{ github.repository_owner }}/docs-middleware-manager:pr-${{ github.event.pull_request.number }}
+            docker run --rm -p 8082:3000 ghcr.io/${{ github.repository_owner }}/docs-middleware-manager:pr-${{ github.event.pull_request.number }}
+            ```

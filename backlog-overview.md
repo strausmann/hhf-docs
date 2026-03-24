@@ -167,30 +167,33 @@
 
 ---
 
-## Roadmap Summary
+## Roadmap Summary (GitHub Issue Numbers)
 
-| Issue | Title | Project | Phase | Priority | Effort | Team |
-|---|---|---|---|---|---|---|
-| CSM-01 | Fix incorrect API docs and architecture | crowdsec-manager | 1 | critical | M | dev |
-| CSM-02 | Complete environment variables | crowdsec-manager | 1 | critical | M | dev |
-| CSM-03 | Document Hub Browser feature | crowdsec-manager | 1 | high | M | dev |
-| CSM-04 | Document History, Config Validation, Simulation | crowdsec-manager | 1 | high | M | dev |
-| CSM-05 | Add Pangolin deployment guide | crowdsec-manager | 1 | high | S | dev |
-| MM-01 | Fix incorrect and outdated content | middleware-manager | 1 | critical | S | dev |
-| MM-02 | Document Security Hub (TLS Hardening + Secure Headers) | middleware-manager | 1 | high | M | dev |
-| MM-03 | Document External Middlewares | middleware-manager | 1 | high | S | dev |
-| MM-04 | Document ENABLE_FILE_CONFIG and complete env-vars | middleware-manager | 1 | high | S | dev |
-| CSM-06 | CrowdSec core API reference | crowdsec-manager | 2 | high | L | dev |
-| CSM-07 | Allowlists, Captcha, Scenarios API | crowdsec-manager | 2 | medium | M | dev |
-| CSM-08 | Notifications, Hub, Config Validation API | crowdsec-manager | 2 | medium | M | dev |
-| CSM-09 | System API endpoints (Cron, Profiles, etc.) | crowdsec-manager | 2 | low | S | dev |
-| MM-05 | Complete API reference (Security, Pagination) | middleware-manager | 2 | medium | M | dev |
-| CSM-10 | Helm / Kubernetes deployment guide | crowdsec-manager | 3 | medium | M | dev |
-| CSM-11 | Advanced guides (Multi-Host, Tailscale, NATS) | crowdsec-manager | 3 | medium | M | dev |
-| CSM-12 | Troubleshooting + Migration guide | crowdsec-manager | 3 | medium | M | marketing |
-| MM-06 | Add Screenshots (replace all placeholders) | middleware-manager | 3 | medium | L | marketing |
-| MM-07 | Architecture / How It Works page | middleware-manager | 3 | medium | M | dev |
-| MM-08 | Changelog and FAQ pages | middleware-manager | 3 | low | S | marketing |
-| SHARED-01 | Static Export migration (both projects) | both | 4 | medium | L | ops |
+| GH Issue | ID | Title | Project | Phase | Priority | Effort | Team |
+|---|---|---|---|---|---|---|---|
+| [#1](https://github.com/strausmann/hhf-docs/issues/1) | CSM-01 | Fix incorrect API docs and architecture | crowdsec-manager | 1 | critical | M | dev |
+| [#2](https://github.com/strausmann/hhf-docs/issues/2) | CSM-02 | Complete environment variables | crowdsec-manager | 1 | critical | M | dev |
+| [#3](https://github.com/strausmann/hhf-docs/issues/3) | CSM-03 | Document Hub Browser feature | crowdsec-manager | 1 | high | M | dev |
+| [#4](https://github.com/strausmann/hhf-docs/issues/4) | CSM-04 | Document History, Config Validation, Simulation | crowdsec-manager | 1 | high | M | dev |
+| [#5](https://github.com/strausmann/hhf-docs/issues/5) | CSM-05 | Add Pangolin deployment guide | crowdsec-manager | 1 | high | S | dev |
+| [#6](https://github.com/strausmann/hhf-docs/issues/6) | MM-01 | Fix incorrect and outdated content | middleware-manager | 1 | critical | S | dev |
+| [#7](https://github.com/strausmann/hhf-docs/issues/7) | MM-02 | Document Security Hub (TLS Hardening + Secure Headers) | middleware-manager | 1 | high | M | dev |
+| [#8](https://github.com/strausmann/hhf-docs/issues/8) | MM-03 | Document External Middlewares | middleware-manager | 1 | high | S | dev |
+| [#9](https://github.com/strausmann/hhf-docs/issues/9) | MM-04 | Document ENABLE_FILE_CONFIG and complete env-vars | middleware-manager | 1 | high | S | dev |
+| [#10](https://github.com/strausmann/hhf-docs/issues/10) | CSM-06 | CrowdSec core API reference | crowdsec-manager | 2 | high | L | dev |
+| [#11](https://github.com/strausmann/hhf-docs/issues/11) | CSM-07 | Allowlists, Captcha, Scenarios API | crowdsec-manager | 2 | medium | M | dev |
+| [#12](https://github.com/strausmann/hhf-docs/issues/12) | CSM-08 | Notifications, Hub, Config Validation API | crowdsec-manager | 2 | medium | M | dev |
+| [#13](https://github.com/strausmann/hhf-docs/issues/13) | CSM-09 | System API endpoints (Cron, Profiles, etc.) | crowdsec-manager | 2 | low | S | dev |
+| [#15](https://github.com/strausmann/hhf-docs/issues/15) | MM-05 | Complete API reference (Security, Pagination) | middleware-manager | 2 | medium | M | dev |
+| [#16](https://github.com/strausmann/hhf-docs/issues/16) | CSM-10 | Helm / Kubernetes deployment guide | crowdsec-manager | 3 | medium | M | dev |
+| [#17](https://github.com/strausmann/hhf-docs/issues/17) | CSM-11 | Advanced guides (Multi-Host, Tailscale, NATS) | crowdsec-manager | 3 | medium | M | dev |
+| [#18](https://github.com/strausmann/hhf-docs/issues/18) | CSM-12 | Troubleshooting + Migration guide | crowdsec-manager | 3 | medium | M | marketing |
+| [#19](https://github.com/strausmann/hhf-docs/issues/19) | MM-06 | Add Screenshots (replace all placeholders) | middleware-manager | 3 | medium | L | marketing |
+| [#20](https://github.com/strausmann/hhf-docs/issues/20) | MM-07 | Architecture / How It Works page | middleware-manager | 3 | medium | M | dev |
+| [#21](https://github.com/strausmann/hhf-docs/issues/21) | MM-08 | Changelog and FAQ pages | middleware-manager | 3 | low | S | marketing |
+| [#22](https://github.com/strausmann/hhf-docs/issues/22) | SHARED-01 | Static Export migration (both projects) | both | 4 | medium | L | ops |
+| [#23](https://github.com/strausmann/hhf-docs/issues/23) | META | ROADMAP Master Tracking Issue | both | — | — | — | pm |
 
-**Total Issues (excl. Meta): 21**
+**Total Issues: 22 (21 work items + 1 roadmap meta-issue)**
+
+Note: Issue #14 was a pre-existing "Maintainer Alignment" issue not part of this backlog.
