@@ -1,22 +1,26 @@
-# HHF Docs Staging — hhdocker01 (172.16.50.40)
+# HHF Docs Staging
 # Deploy: docker compose -f staging/docker-compose.yml up -d
 # Images werden von GitHub Actions gebaut und in GHCR gepusht
+#
+# Optionale Variablen (Dockhand Environment Variables oder .env):
+#   CROWDSEC_DOCS_IMAGE  — Custom image (default: ghcr.io/strausmann/docs-crowdsec-manager)
+#   CROWDSEC_DOCS_TAG    — Image tag (default: latest)
+#   CROWDSEC_DOCS_PORT   — Host port (default: 8081)
+#   MIDDLEWARE_DOCS_IMAGE — Custom image (default: ghcr.io/strausmann/docs-middleware-manager)
+#   MIDDLEWARE_DOCS_TAG   — Image tag (default: latest)
+#   MIDDLEWARE_DOCS_PORT  — Host port (default: 8082)
 
 services:
   docs-crowdsec:
-    image: ghcr.io/strausmann/docs-crowdsec-manager:latest
+    image: ${CROWDSEC_DOCS_IMAGE:-ghcr.io/strausmann/docs-crowdsec-manager}:${CROWDSEC_DOCS_TAG:-latest}
     container_name: docs-crowdsec-staging
     restart: unless-stopped
     ports:
-      - "8081:3000"
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+      - "${CROWDSEC_DOCS_PORT:-8081}:3000"
 
   docs-middleware:
-    image: ghcr.io/strausmann/docs-middleware-manager:latest
+    image: ${MIDDLEWARE_DOCS_IMAGE:-ghcr.io/strausmann/docs-middleware-manager}:${MIDDLEWARE_DOCS_TAG:-latest}
     container_name: docs-middleware-staging
     restart: unless-stopped
     ports:
-      - "8082:3000"
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+      - "${MIDDLEWARE_DOCS_PORT:-8082}:3000"
