@@ -1,0 +1,54 @@
+name: "API Documentation"
+description: "Document API endpoints with examples"
+labels: ["type:api-docs", "team:dev"]
+body:
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project
+      options:
+        - CrowdSec Manager
+        - Middleware Manager
+    validations:
+      required: true
+  - type: input
+    id: scope
+    attributes:
+      label: API Area
+      description: "Which API area? (e.g. bouncers, health, middlewares)"
+      placeholder: "scope:bouncers"
+    validations:
+      required: true
+  - type: textarea
+    id: endpoints
+    attributes:
+      label: Endpoints to Document
+      description: "List the endpoints that need documentation"
+      placeholder: |
+        - GET /api/crowdsec/bouncers
+        - POST /api/crowdsec/bouncers
+        - DELETE /api/crowdsec/bouncers/:name
+    validations:
+      required: true
+  - type: textarea
+    id: source-files
+    attributes:
+      label: Source Code Files
+      description: "Where are these endpoints defined?"
+      placeholder: |
+        - Router: internal/api/routes.go
+        - Handler: internal/api/handlers/bouncers.go
+        - Models: internal/models/models.go
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - [ ] All endpoints listed with method, path, description
+        - [ ] Request/response examples with realistic data
+        - [ ] Error responses documented
+        - [ ] Authentication requirements noted
+    validations:
+      required: true

@@ -1,0 +1,46 @@
+name: "Documentation Correction"
+description: "Fix incorrect, outdated, or misleading content"
+labels: ["type:correction"]
+body:
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project
+      options:
+        - CrowdSec Manager
+        - Middleware Manager
+    validations:
+      required: true
+  - type: input
+    id: affected-page
+    attributes:
+      label: Affected Page
+      description: "Which page has the issue?"
+      placeholder: "content/docs/api/docker.mdx"
+    validations:
+      required: true
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current (incorrect) Content
+      description: "What does the page currently say?"
+    validations:
+      required: true
+  - type: textarea
+    id: correct-content
+    attributes:
+      label: Correct Content
+      description: "What should it say instead? Include source reference if possible."
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "Critical (security, data loss, completely wrong)"
+        - "High (misleading, causes user confusion)"
+        - "Medium (outdated but still mostly works)"
+        - "Low (typo, cosmetic)"
+    validations:
+      required: true

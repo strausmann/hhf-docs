@@ -1,0 +1,97 @@
+name: "New Documentation Page"
+description: "Request or plan a new documentation page"
+labels: ["type:new-page"]
+body:
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project
+      options:
+        - CrowdSec Manager
+        - Middleware Manager
+    validations:
+      required: true
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      options:
+        - "Phase 1: Critical gaps"
+        - "Phase 2: API documentation"
+        - "Phase 3: Guides and tutorials"
+        - "Phase 4: Static export"
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Assigned Team
+      options:
+        - "team:dev (code-based docs, API)"
+        - "team:marketing (user guides, content)"
+        - "team:ops (deployment, infrastructure)"
+    validations:
+      required: true
+  - type: input
+    id: scope
+    attributes:
+      label: Feature Scope
+      description: "Which feature area? (e.g. bouncers, security-hub, health)"
+      placeholder: "scope:bouncers"
+    validations:
+      required: true
+  - type: textarea
+    id: page-location
+    attributes:
+      label: Page Location
+      description: "Where should this page live in the docs?"
+      placeholder: |
+        Path: content/docs/features/bouncers.mdx
+        Navigation: Features > Bouncers
+    validations:
+      required: true
+  - type: textarea
+    id: content-outline
+    attributes:
+      label: Content Outline
+      description: "What should this page cover?"
+      placeholder: |
+        ## Sections
+        - Overview
+        - Configuration
+        - API endpoints
+        - Examples
+        - Troubleshooting
+    validations:
+      required: true
+  - type: textarea
+    id: source-reference
+    attributes:
+      label: Source Code Reference
+      description: "Which source files contain the feature logic?"
+      placeholder: |
+        - internal/api/handlers/bouncers.go
+        - web/src/pages/Bouncers.tsx
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "When is this page done?"
+      placeholder: |
+        - [ ] Page builds without errors
+        - [ ] All features documented with examples
+        - [ ] Reviewed by team:marketing for clarity
+        - [ ] Staging tested
+    validations:
+      required: true

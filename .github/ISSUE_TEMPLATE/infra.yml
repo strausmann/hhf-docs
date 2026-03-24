@@ -1,0 +1,25 @@
+name: "Infrastructure Task"
+description: "CI/CD, Docker builds, staging, tooling"
+labels: ["type:infra", "team:ops"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: "What needs to be done?"
+    validations:
+      required: true
+  - type: textarea
+    id: affected-systems
+    attributes:
+      label: Affected Systems
+      placeholder: |
+        - Staging: docs-crowdsec.strausmann.cloud
+        - Docker: hhdocker01
+        - CI/CD: GitHub Actions
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+    validations:
+      required: true

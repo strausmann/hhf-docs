@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CrowdSec Manager Upstream
+    url: https://github.com/hhftechnology/crowdsec_manager/issues
+    about: Issues for the CrowdSec Manager application itself (not docs)
+  - name: Middleware Manager Upstream
+    url: https://github.com/hhftechnology/middleware-manager/issues
+    about: Issues for the Middleware Manager application itself (not docs)
