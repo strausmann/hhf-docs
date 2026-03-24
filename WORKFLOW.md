@@ -116,3 +116,65 @@ docker run -d --rm -p 8083:3000 --name docs-crowdsec-pr42 \
 ```
 
 Later: Pangolin resources per branch (docs-crowdsec-dev.strausmann.cloud) if needed.
+
+---
+
+## Feature Branch Preview (ohne Merge in Fork-Main)
+
+Um Aenderungen auf Staging zu sehen, OHNE sie in den Fork-main zu mergen:
+
+### Option 1: PR im hhf-docs Repo (empfohlen)
+
+```bash
+# 1. Feature-Branch im Submodule pushen (bereits getan)
+cd projects/crowdsec-manager
+git push origin crowdsec/fix-incorrect-docs
+
+# 2. PR im hhf-docs Repo erstellen
+cd ../..
+git checkout -b crowdsec/fix-incorrect-docs
+git add projects/crowdsec-manager
+git commit -m "docs: preview crowdsec incorrect docs fixes"
+git push origin crowdsec/fix-incorrect-docs
+gh pr create --title "[Preview] CrowdSec incorrect docs fixes"
+
+# 3. pr-preview.yml baut automatisch:
+#    ghcr.io/strausmann/docs-crowdsec-manager:pr-<N>
+
+# 4. Preview-Image lokal oder auf Staging testen:
+docker run --rm -p 8083:3000 ghcr.io/strausmann/docs-crowdsec-manager:pr-<N>
+```
+
+### Option 2: Manueller Build vom Feature-Branch
+
+```bash
+# Submodule auf den Feature-Branch wechseln
+cd projects/crowdsec-manager
+git checkout crowdsec/fix-incorrect-docs
+
+# Lokal bauen
+cd ../..
+make docs-crowdsec-build
+# Image wird mit :latest getaggt, NUR lokal
+
+# Lokal testen
+make docs-crowdsec-serve
+# http://localhost:8081
+```
+
+### Option 3: workflow_dispatch mit Branch
+
+```bash
+# Build-Workflow manuell triggern (baut immer vom aktuellen Submodule-Stand)
+gh workflow run "Build CrowdSec Manager Docs" --repo strausmann/hhf-docs
+```
+
+### Aenderungen zuruecknehmen
+
+- **PR nicht mergen**: Einfach den PR schliessen → kein Merge in Fork-main
+- **Feature-Branch loeschen**: `git push origin --delete crowdsec/fix-incorrect-docs`
+- **Submodule zuruecksetzen**: `cd projects/crowdsec-manager && git checkout main`
+- **Staging zuruecksetzen**: Neuen Build von main triggern
+
+Kein Merge in Fork-main noetig um Aenderungen auf Staging zu sehen.
+PRs koennen jederzeit geschlossen werden ohne Auswirkungen.

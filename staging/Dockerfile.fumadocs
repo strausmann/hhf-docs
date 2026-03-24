@@ -1,5 +1,9 @@
 # Fumadocs Server Mode — Node.js Runtime
-# Usage: docker build -f staging/Dockerfile.fumadocs -t docs-image projects/<project>/docs/
+# Builds from the docs/ directory of an HHF project
+#
+# Usage:
+#   docker build -f staging/Dockerfile.fumadocs -t image:tag projects/<project>/docs/
+#
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY . .
