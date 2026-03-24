@@ -10,7 +10,7 @@ jobs:
     if: contains(github.event.pull_request.title, 'crowdsec') || contains(join(github.event.pull_request.labels.*.name), 'crowdsec')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
       - uses: actions/setup-node@v4
@@ -27,7 +27,7 @@ jobs:
     if: contains(github.event.pull_request.title, 'middleware') || contains(join(github.event.pull_request.labels.*.name), 'middleware')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
       - uses: actions/setup-node@v4
