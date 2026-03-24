@@ -1,0 +1,50 @@
+name: Sync Forks with Upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  sync-crowdsec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync crowdsec_manager fork
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_branch: main
+          upstream_sync_repo: hhftechnology/crowdsec_manager
+
+  sync-middleware:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync middleware-manager fork
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_branch: main
+          upstream_sync_repo: hhftechnology/middleware-manager
+
+  update-submodules:
+    needs: [sync-crowdsec, sync-middleware]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update submodules
+        run: |
+          git submodule update --remote --merge
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add projects/
+            git commit -m "chore: sync submodules with upstream"
+            git push
+          fi

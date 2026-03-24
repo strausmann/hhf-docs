@@ -1,0 +1,89 @@
+name: Forum Question Scan
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  scan-forum:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Scan HHF Forum for new questions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = await fetch('https://forum.hhf.technology/latest.json');
+            const data = await response.json();
+            const topics = data.topic_list.topics;
+
+            // Filter topics from last 7 days with "help" or questions
+            const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            const recent = topics.filter(t => {
+              const created = new Date(t.created_at);
+              return created > oneWeekAgo;
+            });
+
+            if (recent.length === 0) {
+              console.log('No new forum topics this week');
+              return;
+            }
+
+            let body = '## Weekly Forum Scan\n\n';
+            body += `Found **${recent.length}** new topics on [forum.hhf.technology](https://forum.hhf.technology) this week:\n\n`;
+
+            for (const t of recent) {
+              const url = `https://forum.hhf.technology/t/${t.slug}/${t.id}`;
+              body += `- [${t.title}](${url}) — ${t.reply_count} replies, ${t.views} views\n`;
+            }
+
+            body += '\n**Action:** Review these topics for documentation gaps. ';
+            body += 'If a question could be answered by better docs, create or update the relevant issue.\n';
+            body += '\n_This scan runs automatically every Monday._';
+
+            // Create or update the weekly scan issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'forum-scan',
+              state: 'open'
+            });
+
+            if (issues.data.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body: body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Forum Scan: Weekly community questions review',
+                body: body,
+                labels: ['forum-scan', 'team:marketing']
+              });
+            }
+
+      - name: Create forum-scan label if missing
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'forum-scan'
+              });
+            } catch {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'forum-scan',
+                color: '5319e7',
+                description: 'Automated weekly forum scan results'
+              });
+            }

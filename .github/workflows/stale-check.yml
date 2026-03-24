@@ -1,0 +1,22 @@
+name: Stale Issue Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  stale-check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: >
+            This issue has been inactive for 14 days. If it's blocked by #14 (Maintainer Alignment),
+            please add `status:blocked` label. If work can proceed, please update the status.
+          stale-issue-label: stale
+          days-before-stale: 14
+          days-before-close: -1  # Never auto-close
+          exempt-issue-labels: 'status:blocked,status:in-review,priority:critical'
