@@ -3,5 +3,7 @@ node_modules/
 out/
 .env
 .env.local
+# Exception: staging/.env is tracked (contains image tags, no secrets)
+!staging/.env
 *.log
 .DS_Store
